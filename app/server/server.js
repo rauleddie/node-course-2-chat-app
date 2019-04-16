@@ -14,9 +14,13 @@ var port = process.env.PORT || 3000;
 app.use(express.static(publicPath));
 // Web socket events
 io.on('connection', function (socket) {
-    console.log('New user connected');
-    socket.on('disconnect', function () {
-        console.log('User was disconnected');
+    socket.on('createMessage', function (message) {
+        console.log('createMessage', message);
+    });
+    socket.emit('newMessage', {
+        from: 'John',
+        text: 'See you then',
+        createdAt: new Date().getTime()
     });
 });
 server.listen(port, function () {
