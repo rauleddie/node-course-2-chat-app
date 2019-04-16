@@ -2,15 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // We import our App dependencies from npm installment.
 var path = require("path");
+var http = require("http");
 var express = require("express");
+var socketIO = require("socket.io");
 // We set up our public path from where we serve our front-end files.
 var sep = path.sep, publicPath = path.join(__dirname, ".." + sep + "public");
 var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
 var port = process.env.PORT || 3000;
 app.use(express.static(publicPath));
-app.listen(port, function (err) {
-    if (err) {
-        return console.log('Unable to start server', err);
-    }
+// Web socket events
+io.on('connection', function (socket) {
+    console.log('New user connected');
+    socket.on('disconnect', function () {
+        console.log('User was disconnected');
+    });
+});
+server.listen(port, function () {
     console.log("Server is up on port " + port);
 });
