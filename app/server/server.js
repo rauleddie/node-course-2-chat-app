@@ -21,12 +21,23 @@ io.on('connection', function (socket) {
             text: message.text,
             createdAt: new Date().getTime()
         });
+        // Emit event to specific user
+        // socket.broadcast.emit('newMessage', {
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime()
+        // });
     });
-    // socket.emit('newMessage', {
-    //     from: 'John',
-    //     text: 'See you then',
-    //     createdAt: new Date().getTime()
-    // });
+    socket.emit('newMessage', {
+        from: 'Admin',
+        text: 'Welcome to the chat app',
+        createdAt: new Date().getTime()
+    });
+    socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        text: 'New user has joined chat',
+        createdAt: new Date().getTime()
+    });
 });
 server.listen(port, function () {
     console.log("Server is up on port " + port);
