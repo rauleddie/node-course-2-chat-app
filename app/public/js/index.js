@@ -5,8 +5,8 @@ socket.on('connect', function () {
     socket.on('newMessage', function (message) {
         console.log('newMessage', message);
     });
-    socket.emit('createMessage', {
-        from: 'Andrew',
-        text: 'Yup, that works for me'
-    });
+    // socket.emit('createMessage', {
+    //     from: 'Andrew',
+    //     text: 'Yup, that works for me'
+    // });
 });

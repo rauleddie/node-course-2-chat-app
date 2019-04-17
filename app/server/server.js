@@ -16,12 +16,17 @@ app.use(express.static(publicPath));
 io.on('connection', function (socket) {
     socket.on('createMessage', function (message) {
         console.log('createMessage', message);
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
     });
-    socket.emit('newMessage', {
-        from: 'John',
-        text: 'See you then',
-        createdAt: new Date().getTime()
-    });
+    // socket.emit('newMessage', {
+    //     from: 'John',
+    //     text: 'See you then',
+    //     createdAt: new Date().getTime()
+    // });
 });
 server.listen(port, function () {
     console.log("Server is up on port " + port);
