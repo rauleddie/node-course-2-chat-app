@@ -5,6 +5,8 @@ var path = require("path");
 var http = require("http");
 var express = require("express");
 var socketIO = require("socket.io");
+// Utility functions
+var message_1 = require("./utils/message");
 // We set up our public path from where we serve our front-end files.
 var sep = path.sep, publicPath = path.join(__dirname, ".." + sep + "public");
 var app = express();
@@ -28,11 +30,7 @@ io.on('connection', function (socket) {
         //     createdAt: new Date().getTime()
         // });
     });
-    socket.emit('newMessage', {
-        from: 'Admin',
-        text: 'Welcome to the chat app',
-        createdAt: new Date().getTime()
-    });
+    socket.emit('newMessage', new message_1.Message('Admin', 'Welcome to chat app'));
     socket.broadcast.emit('newMessage', {
         from: 'Admin',
         text: 'New user has joined chat',
