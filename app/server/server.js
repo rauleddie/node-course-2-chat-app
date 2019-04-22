@@ -16,19 +16,10 @@ var port = process.env.PORT || 3000;
 app.use(express.static(publicPath));
 // Web socket events
 io.on('connection', function (socket) {
-    socket.on('createMessage', function (message) {
-        console.log('createMessage', message);
-        io.emit('newMessage', {
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().getTime()
-        });
-        // Emit event to specific user
-        // socket.broadcast.emit('newMessage', {
-        //     from: message.from,
-        //     text: message.text,
-        //     createdAt: new Date().getTime()
-        // });
+    socket.on('createMessage', function (_a, callback) {
+        var from = _a.from, text = _a.text;
+        console.log('createMessage', { from: from, text: text });
+        io.emit('newMessage', new message_1.Message(from, text));
     });
     socket.emit('newMessage', new message_1.Message('Admin', 'Welcome to chat app'));
     socket.broadcast.emit('newMessage', {
@@ -40,3 +31,4 @@ io.on('connection', function (socket) {
 server.listen(port, function () {
     console.log("Server is up on port " + port);
 });
+//# sourceMappingURL=server.js.map

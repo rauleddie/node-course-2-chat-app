@@ -4,7 +4,7 @@ module.exports = {
     entry: {
         main: './src/public/js/index.ts'
     },
-    mode: 'development',
+    mode: 'production',
     output: {
         filename: 'bundle.js',
         path: path.join(__dirname, `${sep}app${sep}public${sep}js`)
