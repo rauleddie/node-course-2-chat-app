@@ -9,4 +9,13 @@ var Message = /** @class */ (function () {
     return Message;
 }());
 exports.Message = Message;
+var LocationMessage = /** @class */ (function () {
+    function LocationMessage(from, latitude, longitude) {
+        this.from = from;
+        this.url = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+        this.createdAt = new Date().getTime();
+    }
+    return LocationMessage;
+}());
+exports.LocationMessage = LocationMessage;
 //# sourceMappingURL=message.js.map

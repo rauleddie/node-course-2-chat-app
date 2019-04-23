@@ -10,4 +10,13 @@ describe('generateMessage', function () {
         expect(message).toInclude({ from: from, text: text });
     });
 });
+describe('generateLocationMessage', function () {
+    it('should generate correct location object', function () {
+        var from = 'Deb', lat = 15, long = 19;
+        var url = "https://www.google.com/maps?q=" + lat + "," + long;
+        var locationMessage = new message_1.LocationMessage(from, lat, long);
+        expect(typeof locationMessage.createdAt).toBe('number');
+        expect(locationMessage).toInclude({ from: from, url: url });
+    });
+});
 //# sourceMappingURL=message.test.js.map
