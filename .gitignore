@@ -1,4 +1,4 @@
 node_modules/
-./app/playground
+app/playground/
 src/
 tsconfig.json

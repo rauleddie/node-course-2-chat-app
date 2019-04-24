@@ -25,7 +25,33 @@
             <button id="send-location">Send Location</button>
         </div>
     </div>
-    
+
+    <!-- TEMPLATES -->
+    <!-- ------------------------------------------------ -->
+    <template id="message-template" type="text/template">
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{formattedTime}}</span>
+            </div>
+            <div class="message__body">
+                <p>{{text}}</p>
+            </div>
+        </li>
+    </template>
+    <!-- ------------------------------------------------ -->
+    <template id="location-message-template">
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{formattedTime}}</span>
+            </div>
+            <div class="message__body">
+                <a href="{{url}}" target="_blank">My Current Location</a>
+            </div>
+        </li>
+    </template>
+    <!-- ------------------------------------------------ -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="./js/bundle.js"></script>
 </html>
