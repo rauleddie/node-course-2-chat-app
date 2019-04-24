@@ -21,6 +21,7 @@ io.on('connection', function (socket) {
         var from = _a.from, text = _a.text;
         console.log('createMessage', { from: from, text: text });
         io.emit('newMessage', new message_1.Message(from, text));
+        callback();
     });
     socket.on('createLocationMessage', function (_a) {
         var latitude = _a.latitude, longitude = _a.longitude;
