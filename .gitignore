@@ -1,3 +1,4 @@
 node_modules/
+./app/playground
 src/
 tsconfig.json

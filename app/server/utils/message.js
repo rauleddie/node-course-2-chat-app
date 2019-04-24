@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var moment = require("moment");
 var Message = /** @class */ (function () {
     function Message(from, text) {
         this.from = from;
@@ -13,7 +14,7 @@ var LocationMessage = /** @class */ (function () {
     function LocationMessage(from, latitude, longitude) {
         this.from = from;
         this.url = "https://www.google.com/maps?q=" + latitude + "," + longitude;
-        this.createdAt = new Date().getTime();
+        this.createdAt = moment().valueOf();
     }
     return LocationMessage;
 }());

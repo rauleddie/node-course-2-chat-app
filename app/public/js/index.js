@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Load Jquery
 var jquery_1 = __importDefault(require("jquery"));
+var moment_1 = __importDefault(require("moment"));
 (function () {
     function init() {
         var socket = window.io();
@@ -12,17 +13,18 @@ var jquery_1 = __importDefault(require("jquery"));
         socket.on('connect', function () {
             console.log('Connected to the server');
         });
-        socket.on('newMessage', function (_a) {
-            var from = _a.from, text = _a.text;
-            console.log({ from: from, text: text });
-            var li = jquery_1.default('<li></li>').text(from + " : " + text);
+        socket.on('newMessage', function (message) {
+            console.log(message);
+            var formattedTime = moment_1.default(message.createdAt).format('h:mm a');
+            var li = jquery_1.default('<li></li>').text(message.from + " " + formattedTime + ": " + message.text);
             jquery_1.default('#messages').append(li);
         });
         socket.on('newLocationMessage', function (message) {
             var li = jquery_1.default('<li></li>');
             var a = jquery_1.default('<a target="_blank">My current location</a>');
+            var formattedTime = moment_1.default(message.createdAt).format('h:mm a');
             a.attr('href', message.url);
-            li.text(message.from + " : ").append(a);
+            li.text(message.from + " " + formattedTime + ": ").append(a);
             jquery_1.default('#messages').append(li);
         });
         // Message submit

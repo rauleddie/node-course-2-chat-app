@@ -1,13 +1,13 @@
-const path = require('path'), {sep} = path;
-
+const path = require('path');
+const webpack = require('webpack');
 module.exports = {
     entry: {
-        main: './src/public/js/index.ts'
+        main: path.join(__dirname, 'src', 'public', 'js', 'index.ts')
     },
     mode: 'production',
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, `${sep}app${sep}public${sep}js`)
+        path: path.join(__dirname, 'app', 'public', 'js')
     },
     resolve: {
         extensions: ['ts', 'js']
@@ -16,5 +16,9 @@ module.exports = {
         rules: [
             {test: /\.ts$/, loaders: 'ts-loader'}
         ]
-    }
+    },
+    plugins: [
+        // Ignore all locale files of moment.js
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    ]
 }
