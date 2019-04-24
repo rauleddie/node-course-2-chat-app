@@ -10,6 +10,7 @@ var mustache_1 = __importDefault(require("mustache"));
 (function () {
     function init() {
         var socket = window.io();
+        delete window.io;
         // Socket.io listeners
         socket.on('connect', function () {
             console.log('Connected to the server');
@@ -24,6 +25,7 @@ var mustache_1 = __importDefault(require("mustache"));
                 formattedTime: formattedTime
             });
             jquery_1.default('#messages').append(html);
+            scrollToBottom();
         });
         socket.on('newLocationMessage', function (message) {
             var formattedTime = moment_1.default(message.createdAt).format('h:mm a');
@@ -35,12 +37,7 @@ var mustache_1 = __importDefault(require("mustache"));
                 formattedTime: formattedTime
             });
             jquery_1.default('#messages').append(html);
-            // const li = $('<li></li>');
-            // const a = $('<a target="_blank">My current location</a>');
-            // const formattedTime = moment(message.createdAt).format('h:mm a');
-            // a.attr('href', message.url);
-            // li.text(`${message.from} ${formattedTime}: `).append(a);
-            // $('#messages').append(li);
+            scrollToBottom();
         });
         // Message submit
         var messageTextbox = jquery_1.default('[name=message]');
@@ -75,6 +72,20 @@ var mustache_1 = __importDefault(require("mustache"));
                 alert('Unable to fetch location');
             });
         });
+    }
+    function scrollToBottom() {
+        // Selectors
+        var messages = jquery_1.default('#messages');
+        var newMessage = messages.children('li:last-child');
+        // Heights
+        var clientHeight = messages.prop('clientHeight');
+        var scrollTop = messages.prop('scrollTop');
+        var scrollHeight = messages.prop('scrollHeight');
+        var newMessageHeight = newMessage.innerHeight();
+        var lastMessageHeight = newMessage.prev().innerHeight();
+        if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+            messages.scrollTop(scrollHeight);
+        }
     }
     window.addEventListener('load', init);
 })();
