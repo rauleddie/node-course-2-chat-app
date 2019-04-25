@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Node Chat App</title>
+</head>
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="user">
+        </div>
+    </div>
+
+    <div class="chat__main">
+        <ol id="messages" class="chat__messages"></ol>
+        <div class="chat__footer">
+            <form id="message-form">
+                <input type="text" name="message" placeholder="Message"
+                autofocus autocomplete="off">
+                <button>Send</button>
+            </form>
+            <button id="send-location">Send Location</button>
+        </div>
+    </div>
+
+    <!-- TEMPLATES -->
+    <!-- ------------------------------------------------ -->
+    <template id="message-template" type="text/template">
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{formattedTime}}</span>
+            </div>
+            <div class="message__body">
+                <p>{{text}}</p>
+            </div>
+        </li>
+    </template>
+    <!-- ------------------------------------------------ -->
+    <template id="location-message-template">
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{formattedTime}}</span>
+            </div>
+            <div class="message__body">
+                <a href="{{url}}" target="_blank">My Current Location</a>
+            </div>
+        </li>
+    </template>
+    <!-- ------------------------------------------------ -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/bundle.js"></script>
+</html>
