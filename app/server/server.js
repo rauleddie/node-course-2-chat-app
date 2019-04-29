@@ -38,14 +38,19 @@ io.on('connection', function (socket) {
         socket.broadcast.to(room).emit('newMessage', new message_1.Message('Admin', name + " has joined."));
     });
     socket.on('createMessage', function (_a, callback) {
-        var from = _a.from, text = _a.text;
-        console.log('createMessage', { from: from, text: text });
-        io.emit('newMessage', new message_1.Message(from, text));
+        var text = _a.text;
+        var _b = users.getUser(socket.id), name = _b.name, room = _b.room;
+        if ((name && room) && validation_1.isRealString(text)) {
+            io.to(room).emit('newMessage', new message_1.Message(name, text));
+        }
         callback();
     });
     socket.on('createLocationMessage', function (_a) {
         var latitude = _a.latitude, longitude = _a.longitude;
-        io.emit('newLocationMessage', new message_1.LocationMessage('Admin', latitude, longitude));
+        var _b = users.getUser(socket.id), name = _b.name, room = _b.room;
+        if (name && room) {
+            io.to(room).emit('newLocationMessage', new message_1.LocationMessage(name, latitude, longitude));
+        }
     });
     socket.on('disconnect', function () {
         var user = users.removeUser(socket.id);

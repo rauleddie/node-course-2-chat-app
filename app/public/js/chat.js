@@ -71,7 +71,6 @@ var jquery_deparam_1 = __importDefault(require("jquery-deparam"));
             e.preventDefault();
             // Emit the input message
             socket.emit('createMessage', {
-                from: 'User',
                 text: messageTextbox.val()
             }, 
             // Acknowledgment callback
