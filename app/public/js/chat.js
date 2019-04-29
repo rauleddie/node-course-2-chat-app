@@ -7,13 +7,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jquery_1 = __importDefault(require("jquery"));
 var moment_1 = __importDefault(require("moment"));
 var mustache_1 = __importDefault(require("mustache"));
+var jquery_deparam_1 = __importDefault(require("jquery-deparam"));
 (function () {
     function init() {
         var socket = window.io();
         delete window.io;
         // Socket.io listeners
         socket.on('connect', function () {
-            console.log('Connected to the server');
+            var params;
+            if (window.location.search[0] === '?') {
+                params = jquery_deparam_1.default(window.location.search.substring(1));
+            }
+            else {
+                params = jquery_deparam_1.default(window.location.search);
+            }
+            socket.emit('join', params, function (err) {
+                if (err) {
+                    alert(err);
+                    window.location.href = '/';
+                }
+                else {
+                    console.log('No error');
+                }
+            });
         });
         socket.on('newMessage', function (message) {
             var formattedTime = moment_1.default(message.createdAt).format('h:mm a');
@@ -38,6 +54,16 @@ var mustache_1 = __importDefault(require("mustache"));
             });
             jquery_1.default('#messages').append(html);
             scrollToBottom();
+        });
+        socket.on('updateUserList', function (userList) {
+            var ol = jquery_1.default('<ol></ol>');
+            userList.forEach(function (user) {
+                ol.append(jquery_1.default('<li></li>').text(user));
+            });
+            jquery_1.default('#users').html("<ol>" + ol.html() + "</ol>");
+        });
+        socket.on('disconnect', function () {
+            console.log('Disconnected from server');
         });
         // Message submit
         var messageTextbox = jquery_1.default('[name=message]');

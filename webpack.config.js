@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 module.exports = {
     entry: {
-        main: path.join(__dirname, 'src', 'public', 'js', 'index.ts')
+        main: path.join(__dirname, 'src', 'public', 'js', 'chat.ts')
     },
     mode: 'production',
     output: {
